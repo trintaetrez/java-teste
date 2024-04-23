@@ -93,9 +93,20 @@ public class Worker {
 		return sum;
 	}
 	
+	public String toString() {
+		return id + ", " + departament.getName() + ", " + name + ", " + level + ", " + String.format("%.2f", baseSalary);
+	}
 	
+	public void aumentaSalario(double aumento) {
+		baseSalary += ((baseSalary *  aumento) / 100); 
+	}
 	
+	public void listarContratos() {
+		int contador = 0;
+		for (HourContract c : contracts) {
+			contador++;
+			System.out.println("Contrato #" + contador + ": " + c);
+		}
+	}
 	
-	
-
 }

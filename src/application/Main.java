@@ -1,18 +1,22 @@
 package application;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 import entities.Departament;
+import entities.HourContract;
 import entities.Worker;
 import utilities.Menu;
 import utilities.enums.WorkerLevel;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
@@ -29,6 +33,7 @@ public class Main {
 		System.out.println("Bem vindo ao sistema de controle de funcionários do JBB !!");
 		
 		Menu menu = new Menu(sc);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		menu.showMenu();
 		
@@ -85,9 +90,125 @@ public class Main {
 				System.out.println("Cadastro feito com sucesso.");
 				menu.showMenu();
 				op = menu.getOp();
+				break;
+			case 2: 
+				if (workers.size() == 0) {
+					System.out.println("Nenhum funcionário cadastrado.");
+				} else {
+					System.out.println("Lista de funcionários:");
+					System.out.println();
+					
+					for (Worker work : workers) {
+						System.out.println(work.toString());
+					}
+				}
+				menu.showMenu();
+				op = menu.getOp();
+				break;
+			case 3 :
+				if (workers.size() == 0) {
+					System.out.println("Nenhum funcionário cadastrado.");
+				} else {	
+					System.out.println("Lista de funcionários:");
+					System.out.println();
+					
+					for (Worker worker : workers) {
+						System.out.println(worker.toString());
+					}
+					System.out.println();
+					System.out.print("Digite o ID do funcionário que vai receber aumento: ");
+					int id = sc.nextInt();
+					
+					if (hasId(workers, id)) {
+						System.out.print("Digite a porcentagem: ");
+						double porcentagem = sc.nextDouble();
+						
+						for (Worker worker : workers) {
+							if (worker.getId() == id ) {
+								worker.aumentaSalario(porcentagem);
+							}
+						}
+					} else {
+						System.out.println();
+						System.out.println("Id não cadastrado.");
+					}
+				}
+				menu.showMenu();
+				op = menu.getOp();
+				break;
+			case 4:
+				if (workers.size() == 0) {
+					System.out.println("Nenhum funcionário cadastrado.");
+				} else {
+					System.out.println("Lista de funcionários:");
+					System.out.println();
+					
+					for (Worker worker : workers) {
+						System.out.println(worker.toString());
+					}
+					System.out.println();
+					System.out.print("Digite o ID do funcionário que vai receber aumento: ");
+					int id = sc.nextInt();
+					if (hasId(workers, id)) {
+						System.out.print("Quantos contratos serão adicionados: ");
+						int nContratos = sc.nextInt();
+						
+						for (int i = 1; i <= nContratos; i++) {
+							System.out.println();
+							System.out.println("Digite os dados do contrato #" + i);
+							System.out.print("Data (DD/MM/YYYY): ");
+							Date data = sdf.parse(sc.next());
+							System.out.print("Valor por hora: ");
+							double valorHora = sc.nextDouble();
+							System.out.print("Duração (horas): ");
+							int horas = sc.nextInt();
+							
+							for (Worker worker : workers) {
+								if (worker.getId() == id ) {
+									worker.addContract(new HourContract(data, valorHora, horas));
+								}
+							}
+						}
+					} else {
+						System.out.println();
+						System.out.println("Id não cadastrado.");
+					}
+				}
+				menu.showMenu();
+				op = menu.getOp();
+				break;
+			case 5:
+				if (workers.size() == 0) {
+					System.out.println("Nenhum funcionário cadastrado.");
+				} else {
+					System.out.println("Lista de funcionários:");
+					System.out.println();
+					
+					for (Worker worker : workers) {
+						System.out.println(worker.toString());
+					}
+					System.out.println();
+					System.out.print("Digite o ID do funcionário para ver os contratos cadastrados: ");
+					int id = sc.nextInt();
+					System.out.println();
+					if (hasId(workers, id)) {
+							for (Worker worker : workers) {
+								if (worker.getId() == id ) {
+									worker.listarContratos();
+							}
+						}
+					} else {
+						System.out.println();
+						System.out.println("Id não cadastrado.");
+					}
+				}
+				menu.showMenu();
+				op = menu.getOp();
+				break;
 			}
 		}
-		
+		System.out.println();
+		System.out.println("Programa encerrado.");
 		sc.close();
 	}
 	

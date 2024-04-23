@@ -24,10 +24,15 @@ public class Menu {
 		System.out.println();
 		System.out.println("Escolha a opção desejada:");
 		System.out.println();
-		System.out.println("[0] - Sair\n[1] - Cadastrar funcionário");
+		System.out.println("[0] - Sair\n"
+				+ "[1] - Cadastrar funcionário\n"
+				+ "[2] - Listar funcionários cadastrados\n"
+				+ "[3] - Aumento salarial\n"
+				+ "[4] - Adicionar contrato\n"
+				+ "[5] - Listar os contratos de um funcionário");
 		op = scanner.nextInt();
 		
-		while (op < 0 || op > 1) {
+		while (op < 0 || op > 5) {
 			System.out.println();
 			System.out.println("Opção inválida. Digite novamente.");
 			showMenu();
