@@ -207,30 +207,35 @@ public class Main {
 					if (hasId(workers, id)) {
 						for (Worker worker : workers) {
 							if (worker.getId() == id ) {
+								if (worker.tamanhoLista()) {
+									System.out.println("Nenhum contrato na lista.");
+								} else {
 								worker.listarContratos();
 								System.out.println();
 								System.out.print("Qual o número do contrato que você quer remover? ");
 								int nContrato = sc.nextInt();
 
 								
-								/*for (Worker worker3 : workers) {
+								for (Worker worker3 : workers) {
 									if (worker.getId() == id ) {
 										while(worker3.checkContracNumber2(nContrato) == 0) {
 											System.out.println();
 											System.out.println("Contrato inexistente. Digite outro número.");
 											System.out.print("Número do contrato: ");
 											nContrato = sc.nextInt();
-											}
+										}
 									}
-								}*/
+								}
 								
 								for (Worker worker2 : workers) {
 									if (worker2.checkContracNumber2(nContrato) != 0) {
 										worker2.removerContrato(nContrato);
+										System.out.println();
 										System.out.println("Contrato removido.");
+										}
 									}
-								}
 								
+								}
 							}
 						}
 					} else {
@@ -257,14 +262,49 @@ public class Main {
 					System.out.println();
 					if (hasId(workers, id)) {
 							for (Worker worker : workers) {
-								if (worker.getId() == id ) {
-									worker.listarContratos();
-							}
+								if(worker.tamanhoLista()) {
+									System.out.println("Nenhum contrato na lista");
+								} else {
+									if (worker.getId() == id ) {
+										worker.listarContratos();
+								}
+								}
 						}
 					} else {
 						System.out.println();
 						System.out.println("Id não cadastrado.");
 					}
+				}
+				menu.showMenu();
+				op = menu.getOp();
+				break;
+			case 7:
+				if (workers.size() == 0) {
+					System.out.println("Nenhum funcionário cadastrado.");
+				} else {
+					System.out.println("Lista de funcionários:");
+					System.out.println();
+					
+					for (Worker worker : workers) {
+						System.out.println(worker.toString());
+					}
+				}
+				System.out.println();
+				System.out.print("Digite o ID do funcionário para ver o seu salário total: ");
+				int id = sc.nextInt();
+				System.out.println();
+				if (hasId(workers, id)) {
+					for (Worker worker : workers) {
+						if (worker.getId() == id) {
+							System.out.print("Digite o mês e a data para calcular a renda: ");
+							System.out.println();
+							String mesEAno = sc.next();
+							worker.rendaTotal(mesEAno);
+						}
+					}
+				} else {
+					System.out.println();
+					System.out.println("Id não cadastrado.");
 				}
 				menu.showMenu();
 				op = menu.getOp();

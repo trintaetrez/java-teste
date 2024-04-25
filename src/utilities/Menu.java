@@ -30,10 +30,11 @@ public class Menu {
 				+ "[3] - Aumento salarial\n"
 				+ "[4] - Adicionar contrato\n"
 				+ "[5] - Remover contrato\n"
-				+ "[6] - Listar os contratos de um funcionário");
+				+ "[6] - Listar os contratos de um funcionário\n"
+				+ "[7] - Salario total de um funcionario");
 		op = scanner.nextInt();
 		
-		while (op < 0 || op > 6) {
+		while (op < 0 || op > 7) {
 			System.out.println();
 			System.out.println("Opção inválida. Digite novamente.");
 			showMenu();

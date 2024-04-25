@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import utilities.enums.WorkerLevel;
@@ -85,7 +86,7 @@ public class Worker {
 		for(HourContract c : contracts) {
 			cal.setTime(c.getDate());
 			int c_year = cal.get(Calendar.YEAR);
-			int c_month = cal.get(Calendar.MONTH);
+			int c_month = cal.get(Calendar.MONTH) + 1;
 			if (year == c_year && month == c_month) {
 				sum += c.totalValue();
 			}
@@ -118,11 +119,29 @@ public class Worker {
 	}
 	
 	public void removerContrato(int num) {
-		for (HourContract c : contracts) {
-			if (c.getContractNumber() == num) {
-				removeContract(c);
-			}
+	    Iterator<HourContract> iterator = contracts.iterator();
+	    while (iterator.hasNext()) {
+	        HourContract contrato = iterator.next();
+	        if (contrato.getContractNumber() == num) {
+	            iterator.remove();
+	            return; // Para sair do método após remover o contrato
+	        }
+	    }
+	}
+	
+	public boolean tamanhoLista() {
+		if(contracts.size() == 0) {
+			return true;
 		}
+		else return false;
+	}
+	
+	public void rendaTotal(String data) {
+		int mes = Integer.parseInt(data.substring(0, 2));
+		int ano = Integer.parseInt(data.substring(3));
+		System.out.println("Nome: " + getName());
+		System.out.println("Departamento: " + departament.getName());
+		System.out.println("Renda de " + data + ": " + String.format("%.2f", income(ano, mes)) );
 	}
 	
 }
