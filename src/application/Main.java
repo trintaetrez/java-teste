@@ -147,7 +147,7 @@ public class Main {
 						System.out.println(worker.toString());
 					}
 					System.out.println();
-					System.out.print("Digite o ID do funcionário que vai receber aumento: ");
+					System.out.print("Digite o ID do funcionário que vai receber um contrato: ");
 					int id = sc.nextInt();
 					if (hasId(workers, id)) {
 						System.out.print("Quantos contratos serão adicionados: ");
@@ -156,6 +156,19 @@ public class Main {
 						for (int i = 1; i <= nContratos; i++) {
 							System.out.println();
 							System.out.println("Digite os dados do contrato #" + i);
+							System.out.print("Número do contrato: ");
+							int numeroContrato = sc.nextInt();
+							
+							for (Worker worker : workers) {
+								if (worker.getId() == id ) {
+									while(worker.checkContracNumber2(numeroContrato) != 0) {
+										System.out.println();
+										System.out.println("Contrato existente. Digite outro número.");
+										System.out.print("Número do contrato: ");
+										numeroContrato = sc.nextInt();
+										}
+								}
+							}
 							System.out.print("Data (DD/MM/YYYY): ");
 							Date data = sdf.parse(sc.next());
 							System.out.print("Valor por hora: ");
@@ -163,9 +176,9 @@ public class Main {
 							System.out.print("Duração (horas): ");
 							int horas = sc.nextInt();
 							
-							for (Worker worker : workers) {
-								if (worker.getId() == id ) {
-									worker.addContract(new HourContract(data, valorHora, horas));
+							for (Worker worker1 : workers) {
+								if (worker1.getId() == id ) {
+									worker1.addContract(new HourContract(data, valorHora, horas, numeroContrato));
 								}
 							}
 						}
@@ -178,6 +191,57 @@ public class Main {
 				op = menu.getOp();
 				break;
 			case 5:
+				if (workers.size() == 0) {
+					System.out.println("Nenhum funcionário cadastrado.");
+				} else {
+					System.out.println("Lista de funcionários:");
+					System.out.println();
+					
+					for (Worker worker : workers) {
+						System.out.println(worker.toString());
+					}
+					System.out.println();
+					System.out.print("Digite o ID do funcionário que vai ser removido um contrato: ");
+					int id = sc.nextInt();
+					System.out.println();
+					if (hasId(workers, id)) {
+						for (Worker worker : workers) {
+							if (worker.getId() == id ) {
+								worker.listarContratos();
+								System.out.println();
+								System.out.print("Qual o número do contrato que você quer remover? ");
+								int nContrato = sc.nextInt();
+
+								
+								/*for (Worker worker3 : workers) {
+									if (worker.getId() == id ) {
+										while(worker3.checkContracNumber2(nContrato) == 0) {
+											System.out.println();
+											System.out.println("Contrato inexistente. Digite outro número.");
+											System.out.print("Número do contrato: ");
+											nContrato = sc.nextInt();
+											}
+									}
+								}*/
+								
+								for (Worker worker2 : workers) {
+									if (worker2.checkContracNumber2(nContrato) != 0) {
+										worker2.removerContrato(nContrato);
+										System.out.println("Contrato removido.");
+									}
+								}
+								
+							}
+						}
+					} else {
+						System.out.println();
+						System.out.println("Id não cadastrado.");
+					}
+				}
+				menu.showMenu();
+				op = menu.getOp();
+				break;
+			case 6:
 				if (workers.size() == 0) {
 					System.out.println("Nenhum funcionário cadastrado.");
 				} else {

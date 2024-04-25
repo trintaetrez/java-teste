@@ -5,19 +5,22 @@ import java.util.Date;
 
 public class HourContract {
 
+	
 	private Date date;
 	private Double valuePerHour;
 	private Integer hours;
+	private Integer contractNumber;
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public HourContract() {
 	}
-	
-	public HourContract(Date date, Double valuePerHour, Integer hours) {
+
+	public HourContract(Date date, Double valuePerHour, Integer hours, int contractNumber) {
 		this.date = date;
 		this.valuePerHour = valuePerHour;
 		this.hours = hours;
+		this.contractNumber = contractNumber;
 	}
 
 	public Date getDate() {
@@ -44,11 +47,19 @@ public class HourContract {
 		this.hours = hours;
 	}
 
+	public int getContractNumber() {
+		return contractNumber;
+	}
+
+	public void setContractNumber(int contractNumber) {
+		this.contractNumber = contractNumber;
+	}
+
 	public Double totalValue() {
 		return valuePerHour * hours; 
 	}
 	
 	public String toString() {
-		return sdf.format(date) + ", valor por hora(R$): " + String.format("%.2f", valuePerHour) + ",total horas: " + hours + " horas , total do contrato(R$):  " + String.format("%.2f", totalValue());
+		return "#" + contractNumber + ": " + sdf.format(date) + ", valor por hora(R$): " + String.format("%.2f", valuePerHour) + ", total horas: " + hours + " horas , total do contrato(R$):  " + String.format("%.2f", totalValue());
 	}
 }

@@ -102,10 +102,26 @@ public class Worker {
 	}
 	
 	public void listarContratos() {
+		for (HourContract c : contracts) {
+			System.out.println("Contrato " + c);
+		}
+	}
+	
+	public int checkContracNumber2(int number) {
 		int contador = 0;
 		for (HourContract c : contracts) {
-			contador++;
-			System.out.println("Contrato #" + contador + ": " + c);
+			if(c.getContractNumber() == number) {
+				contador++;
+			}
+		}
+		return contador;
+	}
+	
+	public void removerContrato(int num) {
+		for (HourContract c : contracts) {
+			if (c.getContractNumber() == num) {
+				removeContract(c);
+			}
 		}
 	}
 	
